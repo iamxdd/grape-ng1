@@ -1,0 +1,17 @@
+.gp-uploader{
+	ul {
+		list-style: none;
+		li {
+			float: left;
+			img {
+				width: 203px;
+				height: 171px;
+			}
+			.tip-inline{
+				font-size: 16px;
+				color: #CCC;
+				font-weight: 800;
+			}
+		}
+	}
+}

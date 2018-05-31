@@ -1,0 +1,165 @@
+define(function () {
+
+	var directiveName = 'timeLine';
+	return {
+		__register__: function (mod) {
+			mod.directive(directiveName, [
+				"$http",
+				"$compile", 
+				"API", 
+				"ENV", 
+				"SocketService", 
+				selectProvider
+			]).config(['$qProvider', function ($qProvider) {
+				$qProvider.errorOnUnhandledRejections(false);
+			}]);
+			return mod;
+		}
+	}
+
+	function constructContextMenu(scope, element, attr, $compile){
+
+		var contextMenuHtmlString = '<div context-menu="tlContextMenusOptions" context-menu-class="tl-dropdown-menu-in"></div>';
+		scope.tlContextMenusOptions = [
+		    ['Select', function ($itemScope, $event, modelValue, text, $li) {
+		        scope.selected = $itemScope.item.name;
+		    }],
+		    null, // Dividier
+		    ['Remove', function ($itemScope, $event, modelValue, text, $li) {
+		        
+		    }]
+		];
+		var contextMenu = $compile(contextMenuHtmlString)(scope);
+		element.append(contextMenu);
+
+		return contextMenu;
+	}
+
+	function selectProvider($http, $compile, API, ENV, SocketService) {
+		
+		return {
+
+			restrict: 'A',
+			scope: {
+				options: '&tlOptions'
+			},
+			link: function (scope, element, attr){
+
+				if (!scope.options) throw new Error('Time line component need an assigned option!');
+				var contextMenu = constructContextMenu(scope, element, attr, $compile);
+				var defaultOpts = {
+					minDatetime: new Date(),
+					maxDatetime: new Date(new Date().valueOf() + 1000 * 3600 * 24 * 30),
+					width: 18,
+					color: '#337AB7',
+					borderColor: '#848484',
+					shadowColor: '#333333',
+					nodeShape:{
+						type: 'circle',
+						color: '#FF4A55',
+						borderColor: '#333333'
+					}
+				}
+
+				var hexStringToColor = function (hexString) {
+					var r,g,b;
+					if (hexString.length == 4) {
+						r = '0x' + hexString[1] + hexString[1];
+						g = '0x' + hexString[2] + hexString[2];
+						b = '0x' + hexString[3] + hexString[3];
+					}
+					if (hexString.length == 7) {
+						r = '0x' + hexString[1] + hexString[2];
+						g = '0x' + hexString[3] + hexString[4];
+						b = '0x' + hexString[5] + hexString[6];
+					}
+					return new paper.Color(parseInt(r) / 255, parseInt(g) / 255, parseInt(b) / 255);
+				}
+
+				var opt = {};
+				if (angular.isFunction(scope.options)) {
+					opt = angular.merge(defaultOpts, scope.options());
+				}else if(angular.isObject(scope.options)){
+					opt = angular.merge(defaultOpts, scope.options);
+				}else{
+					throw new Error('Specified option is illegal, should be a function or object.');
+				}
+
+				var canvas = element.get(0);
+	            paper.setup(canvas);
+
+
+				var canvasWidth = canvas.width;
+				var canvasHeight = canvas.height;
+	            // -DEBUG-
+	            var frame = new paper.Path.Rectangle(new paper.Point(0,0), new paper.Size(canvasWidth, canvasHeight));
+	            frame.strokeColor = 'black';
+	            // -DEBUG-
+				var marginWidth = opt.width / 2;
+				var centerPoint = new paper.Point(canvasWidth / 2, canvasHeight / 2);
+				var nodeY = canvasHeight / 2;
+				var nodeStartPoint = new paper.Point(marginWidth, nodeY);
+				var nodeEndPoint = new paper.Point(canvasWidth - marginWidth, nodeY);
+				var timeLineStartPoint = new paper.Point(marginWidth, canvasHeight / 2 - marginWidth);
+				var timeLineEndPoint = new paper.Point(canvasWidth - marginWidth, canvasHeight / 2 + marginWidth);
+
+	            var tool = new paper.Tool();
+
+	            // 设置时间轴形状、颜色，时间轴边框形状、颜色
+				var timeLineMainPath = new paper.Path.Rectangle(timeLineStartPoint, timeLineEndPoint);
+				var borderStartPoint = timeLineStartPoint.subtract(new paper.Point(1, 1));
+				var borderEndPoint = timeLineEndPoint.add(new paper.Point(1, 1));
+				var timeLineMainPathBorder = new paper.Path.Rectangle(borderStartPoint, borderEndPoint);
+				timeLineMainPathBorder.strokeColor = opt.borderColor;
+				timeLineMainPathBorder.shadowColor = opt.shadowColor;
+				timeLineMainPathBorder.shadowBlur = 12;
+				timeLineMainPathBorder.shadowOffset = new paper.Point(8,5);
+
+				var baseColor = hexStringToColor(opt.color);
+				var deltaColor = new paper.Color(0.2,0.2,0.2,0.5);
+				var deltaColorHover = new paper.Color(0.3,0.3,0.3,0.2);
+				var gColor = baseColor.subtract(deltaColor);
+				var gColorHover = baseColor.subtract(deltaColorHover);
+				var gradient = new paper.Gradient([baseColor, gColor]);
+				var gradientHover = new paper.Gradient(['red', gColorHover]);
+				var gStart = new paper.Point(0, 0);
+				var gEnd = new paper.Point(0, opt.width);
+				var gradientColor = new paper.Color(gradient, gStart, gEnd);
+				var gradientColorHover = new paper.Color(gradientHover, gStart, gEnd);
+				timeLineMainPath.fillColor = gradientColor;
+
+				var minDatetimeNode = new paper.Path.Circle(nodeStartPoint, opt.width / 2);
+				minDatetimeNode.strokeColor = 'red';
+				var maxDatetimeNode = new paper.Path.Circle(nodeEndPoint, opt.width / 2);
+				maxDatetimeNode.strokeColor = 'red';
+
+				element.on('contextmenu', function (event) {
+					var eventData = {
+						pageX: event.originalEvent.pageX,
+						pageY: event.originalEvent.pageY,
+						currentTarget: event.originalEvent.currentTarget,
+						view: event.originalEvent.view
+					}
+	            	contextMenu.trigger("contextmenu", eventData);
+					return false;
+				});
+
+				timeLineMainPath.onMouseEnter = function (event) {
+					
+					// var timelinePathHover = new paper.Path.Rectangle(timeLineStartPoint, timeLineEndPoint);
+					// timelinePathHover.fillColor = gradientHover;
+				}
+
+	            tool.onMouseDown = function (event) {
+
+	            };
+	            tool.onMouseMove = function (event) {
+	                
+	            };
+	            tool.onMouseUp = function (event) {
+	            };
+			}
+		}
+	};
+
+});

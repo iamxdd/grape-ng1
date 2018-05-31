@@ -1,0 +1,42 @@
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+				<div>
+					<div class="card">
+						<div class="header text-center">- 找回密码 -</div>
+						<div class="content" ng-if="!context.typeNewPwd">
+							<div class="form-group">
+								<label>手机号</label>
+								<input ng-disabled="context.recover.certifying" ng-model="context.recover.phone" type="tel" placeholder="您的手机号" class="form-control">
+							</div>
+							<div class="form-group">
+								<label>验证码</label>
+								<input ng-disabled="context.recover.certifying" ng-model="context.recover.certifyCode" type="text" placeholder="6位数字验证码" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="has-error text-danger" style="line-height: 14px;height: 14px;display: block;" ng-show="context.recover.hasRecoverError" ng-bind="context.recover.hasRecoverError"></label>
+							</div>
+						</div>
+						<div class="content" ng-if="context.typeNewPwd">
+							<div class="form-group">
+								<label>新密码</label>
+								<input ng-model="context.newpwd" type="text" placeholder="6~20位密码，字母、数字组成" class="form-control">
+							</div>
+							<div class="form-group">
+								<label>确认密码</label>
+								<input ng-model="context.confirmpwd" type="text" placeholder="请确认密码" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="has-error text-danger" style="line-height: 14px;height: 14px;display: block;" ng-show="context.hasNewPwdError" ng-bind="context.hasNewPwdError"></label>
+							</div>
+						</div>
+					<div class="footer text-center">
+						<button ng-disabled="logining" ng-bind="context.base.submitButtonText" class="btn btn-fill btn-success btn-wd" ng-click="context.doSubmit()"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

@@ -1,0 +1,34 @@
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+				<div>
+					<div class="card">
+						<div class="header text-center">- 城慧逛·绿地欧镇商管中心 -</div>
+						<div class="content">
+							<div class="form-group">
+								<label>账号</label>
+								<input ng-disabled="sign.signning.processing" ng-model="context.account.username" type="tel" placeholder="登录手机号" class="form-control">
+							</div>
+							<div class="form-group">
+								<label>密码</label>
+								<input ng-disabled="sign.signning.processing" ng-model="context.account.password" type="password" placeholder="登录密码" class="form-control">
+								<a href="javascript:void(0);" ng-click="context.nav2RecoverPwd()" class="grape-sign-forgetpwd">忘记密码？</a>
+							</div>
+							<div class="form-group" class="center-block">
+								<label class="has-error text-danger" ng-show="context.signning.hasLoginError"><span ng-bind="context.signning.loginErrorMsg"></span></label>
+							</div>
+							<div class="form-group" ng-if="context.page.rememberMe">
+								<label class="checkbox">
+									<input type="checkbox" data-toggle="checkbox" value="context.account.rememberMe">
+									记住我
+								</label>
+							</div>
+						</div>
+						<div class="footer text-center grape-sign-footer">
+							<button ng-disabled="sign.signning.processing" class="btn btn-fill btn-info btn-wd" ng-click="context.doUserLogin()"><span ng-bind="context.signning.loginButtonText"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

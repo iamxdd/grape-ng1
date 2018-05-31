@@ -1,0 +1,76 @@
+<div>
+	<div class="row-fluid clearfix">
+		<div class="col-sm-6">
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle-btn" ng-click="actionImplement(currentAction)">{{currentAction.display}}</button>
+				<button type="button" class="btn btn-primary dropdown-toggle"
+				data-toggle="dropdown">
+				<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<!-- {{%BATCHACTIONS.CRUD%}} -->
+					<li ng-repeat="action in actions track by action.name"><a href="javascript:;" ng-click="actionImplement(action)"><i class="fa {{action.icon}}"></i>{{action.display}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="input-group pull-right search-bar-wrapper">
+				<input sf-typeahead class="form-control search-bar-input" options="context.searchTypeaheadOptions" datasets="context.searchDataSet" ng-model="context.userSearchPattern" type="text" placeholder="{{context.settings.search.display}}">
+				<span class="input-group-addon help-inline btn btn-default" ng-click="context.doSearchAction()">
+					<i class="fa fa-search"></i>搜 索
+				</span>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row-fluid clearfix">
+		<div class="panel-group col-sm-6" id="conditionCollapse">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#conditionCollapse"
+						href="#collapseFilter" ng-click="context.filterHide=!context.filterHide">
+						字段过滤&nbsp;<i class="fa" ng-class="{'fa-angle-double-right': context.filterHide, 'fa-angle-double-down':!context.filterHide}" ng-init="context.filterHide=true"></i>
+					</a>
+					</h4>
+				</div>
+				<div id="collapseFilter" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span ng-repeat="filter in filters" ng-class="{{filter.className}}">
+							<ui-select ng-model="filter.value">
+							<ui-select-match>
+							<span ng-bind="$select.selected.Name">{{$select.selected.Name}}</span>
+							</ui-select-match>
+							<ui-select-choices repeat="data.Id as data in (filter.data | filter: $select.search)">
+							<span ng-bind="data.Name"></span>
+							</ui-select-choices>
+							</ui-select>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-group col-sm-6" id="datetimeCollapse">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#datetimeCollapse"
+						href="#collapseDatetime" ng-click="context.datetimeHide=!context.datetimeHide">
+						时间选择&nbsp;<i class="fa" ng-class="{'fa-angle-double-right': context.datetimeHide, 'fa-angle-double-down':!context.datetimeHide}" ng-init="context.datetimeHide=true"></i>
+					</a>
+					</h4>
+				</div>
+				<div id="collapseDatetime" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span ng-repeat="dtSelector in datetimeSelectors" ng-class="{{dtSelector.className}}">
+						<div class="input-group">
+							<span class="input-group-addon">{{dtSelector.display}}</span>
+							<input date-time auto-close="true" ng-model="dtSelector.value" class="form-control timer-select" min-date="dtSelector.min" format="LLL">
+						</div>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

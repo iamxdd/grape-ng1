@@ -1,0 +1,141 @@
+{
+	"module": "product",
+	"name": "list",
+	"action": "view",
+	"description": "产品列表",
+	"deps": {
+		"require": [{ "dateUtils" : "common/utils/date"}],
+		"ngMods": ["$scope", "$rootScope", "$http", "GrapeBaseLogic"]
+	},
+	"html":{
+		"template": {
+			"main":"../../templates/list.html",
+			"table":{
+				"row": "../../templates/widgets/list.table.row.html"
+			}
+		},
+		"create": {
+			"nav": "product.list.edit",
+			"name": "new",
+			"display": "新建"
+		},
+		"fields": [
+			{
+				"selector": true
+			},
+			{ 
+				"name": "id",
+			  	"display": "ID",
+			  	"editable": false,
+			  	"viewable" : true,
+			  	"sortable": true,
+			  	"editor": {
+			  		"control": "input",
+			  		"refType": null
+			  	}
+			},
+			{ 
+				"name": "price",
+			  	"display": "价格",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"sortable": false,
+			  	"editor": {
+			  		"control": "input",
+			  		"refType": null
+			  	}
+			},
+			{ 
+				"name": "category",
+			  	"display": "类别",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"sortable": false,
+			  	"editor": {
+			  		"control": "select",
+			  		"refType": "productCategory"
+			  	}
+			},
+			{ 
+				"name": "createTime",
+			  	"display": "创建时间",
+			  	"editable": false,
+			  	"viewable" : true,
+			  	"sortable": true,
+			  	"editor": {
+			  		"control": "datetime",
+			  		"refType": null
+			  	}
+			}
+		],
+		"action": [
+			{
+				"nav": "product.list.edit",
+				"name": "view",
+				"display": "查看",
+				"icon": "fa-eye"
+			},
+			{
+				"nav": "product.list.edit",
+				"name": "edit",
+				"display": "编辑",
+				"icon": "fa-pencil",
+				"create": false
+			},
+			{
+				"name": "delete",
+				"display": "删除",
+				"icon": "fa-trash"
+			},
+			{
+				"name": "un-audit",
+				"display": "未审核",
+				"icon": "fa-ban on fa-legal"
+			}
+		],
+		"batchAction": {
+			"crud": [
+				{
+					"name": "delete",
+					"display": "删除",
+					"icon": "fa-trash"
+				},
+				{
+					"name": "fastEdit",
+					"display": "快速编辑",
+					"icon": "fa-pencil"
+				},
+				{
+					"name": "create",
+					"display": "新建",
+					"icon": "fa-plus"
+				}
+			],
+			"permission":[
+				{
+					"name": "audit",
+					"display": "批量审批通过",
+					"icon": "fa-legal"
+				},
+				{
+					"name": "unaudit",
+					"display": "批量审批驳回",
+					"icon": "fa-ban on fa-legal"
+				}
+			],
+			"special":[
+
+				{
+					"name": "onstore",
+					"display": "批量商品上架",
+					"icon": "fa-toggle-on"
+				},
+				{
+					"name": "offstore",
+					"display": "批量商品下架",
+					"icon": "fa-toggle-off"
+				}
+			]
+		}
+	}
+}

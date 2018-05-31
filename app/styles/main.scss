@@ -1,0 +1,23 @@
+
+@import "theme/base";
+@import "widget/table";
+@import "widget/searchbar";
+@import "widget/edit";
+@import "widget/image-uploader";
+@import "widget/timeline";
+
+.pretty-red{
+	color: #E21246;
+}
+
+a:hover,
+a:active,
+a:focus{
+	text-decoration: none;
+}
+
+
+.center-block{
+	display: block;
+	margin: 0 auto;
+}

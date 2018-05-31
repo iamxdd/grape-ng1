@@ -1,0 +1,28 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div cg-busy="[listBusyPromise]" class="tab-content workspace">
+				<div class="tab-pane active" id="list">
+					<div class="widget-box myWidget">
+						<div class="widget-title">
+							<h4>{{%TITLENAME%}}</h4>
+						</div>
+						<!-- <div ng-include="templates/widgets/list.header.html"></div> -->
+						<list-header></list-header>
+						<div class="widget-content myTableBorder list-data-block">
+							{{%EXTRAHTML%}}
+							<table ng-table="context.tableParams" class="table table-bordered table-responsive table-hover" filter="true">
+								<tbody>
+									{{%COLUMNCFG%}}
+								</tbody>
+							</table>
+						</div>
+						<div class="row-fluid">
+							<list-footer></list-footer>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

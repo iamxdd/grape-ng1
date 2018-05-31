@@ -1,0 +1,29 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-sm-12">
+			<div cg-busy="[processBusyPromise]" class="workspace">
+				<div class="widget-box">
+					<div class="widget-title">
+						<h4>{{%TITLENAME%}}</h4>
+					</div>
+					<div class="widget-content">
+						{{%EDITPANEL%}}
+						
+					</div>
+					<div class="row-fluid">
+						<div class="form-horizontal gp-edit-buttons-layout col-sm-offset-2">
+							<div class="gp-editing-buttons-layout" ng-if="!context.viewMode">
+								<button class="btn btn-primary" ng-click="context.doAction('submit')">确定</button>
+								<button class="btn btn-info" ng-click="context.doAction('reset')">重置</button>
+								<button class="btn btn-danger" ng-click="context.doAction('cancel')">取消</button>
+							</div>
+							<div class="gp-view-button-layout" ng-if="context.viewMode">
+								<button class="btn btn-primary" ng-click="context.doAction('cancel')">返回</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

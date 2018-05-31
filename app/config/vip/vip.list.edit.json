@@ -1,0 +1,10 @@
+{
+	"module": "vip",
+	"name": "list",
+	"action": "edit",
+	"description": "会员编辑",
+	"deps": {
+		"require": [{ "dateUtils" : "common/utils/date"}],
+		"ngMods": ["$scope", "$http"]
+	}
+}

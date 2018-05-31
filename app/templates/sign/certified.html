@@ -1,0 +1,35 @@
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+				<div>
+					<div class="card">
+						<div class="header text-center">- 商管权限认领 -</div>
+						<div class="content">
+							<div class="form-group">
+								<label>手机号</label>
+								<input ng-disabled="logining" ng-model="phone" type="tel" placeholder="您的手机号" class="form-control">
+							</div>
+							<div class="form-group">
+								<label>认领码</label>
+								<input ng-disabled="logining" ng-model="certif" type="text" placeholder="商管中心下发给您的认领码" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="has-error text-danger" style="line-height: 14px;height: 14px;display: block;" ng-show="hasLoginError" ng-bind="loginErrorMsg"></label>
+							</div>
+							<!--div class="form-group">
+							<label class="checkbox">
+									<input type="checkbox" data-toggle="checkbox" value="">
+									记住我
+							</label>
+						</div-->
+					</div>
+					<div class="footer text-center">
+						<button ng-disabled="logining" ng-bind="context.base.certifiedButtonText" class="btn btn-fill btn-success btn-wd" ng-click="context.doCertified()"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

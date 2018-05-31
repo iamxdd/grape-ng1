@@ -1,0 +1,64 @@
+{
+	"module": "product",
+	"name": "list",
+	"action": "edit",
+	"description": "产品编辑",
+	"deps": {
+		"require": [{ "dateUtils" : "common/utils/date"}],
+		"ngMods": ["$scope", "$http", "$state", "GrapeBaseLogic"]
+	},
+	"html":{
+		"template": {
+			"main":"../../templates/edit.html"
+		},
+		"fields": [
+			{ 
+				"name": "id",
+			  	"display": "ID",
+			  	"editable": false,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "input"
+			  	}
+			},
+			{
+				"name": "logo",
+			  	"display": "图片",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "image"
+			  	}
+			},
+			{ 
+				"name": "price",
+			  	"display": "价格",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "input"
+			  	}
+			},
+			{ 
+				"name": "category",
+			  	"display": "类别",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"sortable": false,
+			  	"editor": {
+			  		"control": "select",
+			  		"refType": "productCategory"
+			  	}
+			},
+			{ 
+				"name": "createTime",
+			  	"display": "有效时间",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "datetime"
+			  	}
+			}
+		]
+	}
+}

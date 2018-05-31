@@ -1,0 +1,72 @@
+{
+	"module": "vip",
+	"name": "list",
+	"action": "view",
+	"description": "会员列表",
+	"deps": {
+		"require": [{ "dateUtils" : "common/utils/date"}],
+		"ngMods": ["$scope", "$http"]
+	},
+	"html":{
+		"template": "../../templates/list.html",
+		"fields": [
+			{ 
+				"name": "id",
+			  	"display": "ID",
+			  	"editable": false,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "input",
+			  		"refType": null
+			  	}
+			},
+			{ 
+				"name": "level",
+			  	"display": "级别",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "input",
+			  		"refType": null
+			  	}
+			},
+			{ 
+				"name": "group",
+			  	"display": "组",
+			  	"editable": true,
+			  	"viewable" : true,
+			  	"editor": {
+			  		"control": "select",
+			  		"refType": "vipGroup"
+			  	}
+			}
+		],
+		"action": [
+			{
+				"nav": "vip.list.view",
+				"name": "view",
+				"display": "查看"
+			},
+			{
+				"nav": "vip.list.edit",
+				"name": "edit",
+				"display": "查看",
+				"create": false
+			},
+			{
+				"name": "delete",
+				"display": "删除"
+			},
+			{
+				"nav": "vip.list.edit",
+				"name": "new",
+				"display": "新建",
+				"create": true
+			},
+			{
+				"name": "audit",
+				"display": "审核"
+			}
+		]
+	}
+}
